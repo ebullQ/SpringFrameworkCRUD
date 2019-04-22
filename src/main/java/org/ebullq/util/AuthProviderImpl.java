@@ -30,7 +30,7 @@ public class AuthProviderImpl implements AuthenticationProvider {
         String password = authentication.getCredentials().toString();
         if(!password.equals(user.getPassword()))
             throw new BadCredentialsException("Bad credentials");
-        Collection<? extends GrantedAuthority> authorities = user.getAuthority();
+        Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
         return new UsernamePasswordAuthenticationToken(user,null,authorities);
     }
 

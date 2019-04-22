@@ -1,5 +1,6 @@
 package org.ebullq.config;
 
+import org.ebullq.service.UserDetailsServiceImpl;
 import org.ebullq.util.AuthProviderImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
@@ -17,10 +18,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     AuthProviderImpl authProvider;
 
+    @Autowired
+    UserDetailsServiceImpl detailsService;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/login","/registration").anonymous()
+                //.antMatchers("/login","/registration").anonymous()
                 .antMatchers("/").hasRole("USER")
                 .antMatchers("/admin").hasRole("ADMIN")
                 .and().csrf().disable()
@@ -28,12 +32,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .failureUrl("/login/?error=true")
                 .usernameParameter("login")
-                .and().exceptionHandling().accessDeniedPage("/")
+                .and().exceptionHandling().accessDeniedPage("/denied")
                 .and().logout().permitAll();
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(authProvider);
+        //auth.authenticationProvider();
+        auth.userDetailsService(detailsService);
     }
 }
