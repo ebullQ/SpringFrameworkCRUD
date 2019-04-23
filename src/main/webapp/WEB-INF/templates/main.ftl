@@ -1,11 +1,7 @@
-<html>
-<head>
-    <title>Main page</title>
-</head>
-<body>
-    <a href="/">User page</a>
-    <a href="/logout">Logout</a>
-    <h2>Hello ${user.name}</h2>
-    <#if isAdmin==true><a href="/admin">User list</a></#if>
-</body>
-</html>
+<#include "part/common.ftl"/>
+<#macro content>
+    <h1>Hello <strong>${sessionUser.login}</strong></h1>
+    <h2>Welcome to the main page</h2>
+    <h3>Content is coming....</h3>
+</#macro>
+<@page title="Main page"/>

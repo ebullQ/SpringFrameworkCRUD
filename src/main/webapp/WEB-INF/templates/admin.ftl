@@ -1,20 +1,18 @@
-<html>
-<head>
-    <title>Admin</title>
-</head>
-<body>
-<a href="/">User page</a>
-<a href="/logout">Logout</a>
+<#include "part/common.ftl"/>
+<#macro content>
 <div align="center">
-    <table border="1" cellpadding="5">
-        <caption><h2>User List</h2></caption>
+    <h1>User list</h1>
+    <table class="table table-bordered table-dark">
+        <thead>
         <tr>
-            <th>Id</th>
-            <th>Login</th>
-            <th>Name</th>
-            <th>Role</th>
-            <th>Action</th>
+            <th scope="col">Id</th>
+            <th scope="col">Login</th>
+            <th scope="col">Name</th>
+            <th scope="col">Role</th>
+            <th scope="col">Action</th>
         </tr>
+        </thead>
+        <tbody>
     <#if users ? has_content>
         <#list users as user>
         <tr>
@@ -23,16 +21,18 @@
             <td>${user.name}</td>
             <td><#list user.roles as role>${role}<#sep>, </#list></td>
             <td>
-                <a href="/admin/edit/${user.id}">Edit</a>
-                <a href="/admin/delete/${user.id}">Delete</a>
+                <a class="btn btn-info" href="/admin/edit/${user.id}">Edit</a>
+                <a class="btn btn-danger" href="/admin/delete/${user.id}">Delete</a>
             </td>
         </tr>
+        </tbody>
         </#list>
     <#else>
-        <td><p>No users</p></td>
+        </tbody>
+        <h3>No users</h3>
     </#if>
     </table>
-    <a href="/admin/add">Add new user</a>
+    <a class="btn btn-dark" href="/admin/add">Add new user</a>
 </div>
-</body>
-</html>
+</#macro>
+<@page title="Admin panel"/>
