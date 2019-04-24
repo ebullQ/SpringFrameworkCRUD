@@ -19,7 +19,7 @@
             <td>${user.id}</td>
             <td>${user.login}</td>
             <td>${user.name}</td>
-            <td><#list user.roles as role>${role}<#sep>, </#list></td>
+            <td><#list user.roles as role>${role.name}<#sep>, </#list></td>
             <td>
                 <a class="btn btn-info" href="/admin/edit/${user.id}">Edit</a>
                 <a class="btn btn-danger" href="/admin/delete/${user.id}">Delete</a>

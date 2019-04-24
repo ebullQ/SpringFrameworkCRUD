@@ -1,5 +1,6 @@
 package org.ebullq.dao;
 
+import org.ebullq.model.Role;
 import org.ebullq.model.User;
 import org.springframework.stereotype.Repository;
 
@@ -18,6 +19,7 @@ public class UserDAOImpl implements UserDAO{
     public List<User> getAllUsers() {
         return entityManager.createQuery("from User", User.class).getResultList();
     }
+
 
     @Override
     public User getUserById(int id) {

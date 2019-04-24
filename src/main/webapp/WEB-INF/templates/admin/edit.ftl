@@ -23,9 +23,9 @@
          </div>
          <div class="form-group row justify-content-center align-items-center">
              <label class="col-sm-1 col-form-label">Roles</label>
-    <#list roles as role>
+    <#list allRoles as role>
         <label class="col-sm-2"><input class="form-check-input" class="form-control" name="${role}" type="checkbox"
-            ${user.roles?seq_contains(role)?string("checked", "")}>${role}</label>
+            ${roles?seq_contains(role)?string("checked", "")}>${role}</label>
     </#list>
          </div>
          <button type="submit" class="btn btn-dark">Submit</button>

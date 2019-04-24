@@ -2,8 +2,10 @@ package org.ebullq.controller;
 
 import org.ebullq.model.Role;
 import org.ebullq.model.User;
+import org.ebullq.service.RoleService;
 import org.ebullq.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +17,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class AuthController {
 
     @Autowired
+    @Qualifier("userServiceImpl")
     private UserService userService;
+
+    @Autowired
+    @Qualifier("roleServiceImpl")
+    private RoleService roleService;
 
     @GetMapping("/login")
     public String login() {
@@ -34,7 +41,7 @@ public class AuthController {
         if(checkUser != null){
             return "/auth/registration";
         }
-        user.getRoles().add(Role.ROLE_USER);
+        user.getRoles().add(roleService.getRoleByName("ROLE_USER"));
         userService.saveUser(user);
         return "redirect:/login";
     }

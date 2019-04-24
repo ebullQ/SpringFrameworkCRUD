@@ -1,7 +1,9 @@
 package org.ebullq.controller;
 
+import org.ebullq.dao.RoleDao;
 import org.ebullq.model.Role;
 import org.ebullq.model.User;
+import org.ebullq.service.RoleService;
 import org.ebullq.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -10,9 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -23,6 +23,10 @@ public class AdminController {
     @Autowired
     @Qualifier("userServiceImpl")
     private UserService userService;
+
+    @Autowired
+    @Qualifier("roleServiceImpl")
+    private RoleService roleService;
 
     @GetMapping
     public String admin(Model model){
@@ -38,7 +42,7 @@ public class AdminController {
 
     @PostMapping("/add")
     public String addUser(@ModelAttribute User user){
-        user.getRoles().add(Role.ROLE_USER);
+        user.getRoles().add(roleService.getRoleByName("ROLE_USER"));
         userService.saveUser(user);
         return "redirect:/admin";
     }
@@ -55,7 +59,8 @@ public class AdminController {
                              Model model){
         User user = userService.getUserById(id);
         model.addAttribute("user",user);
-        model.addAttribute("roles", Role.values());
+        model.addAttribute("roles", User.getRolesAsStringNames(user.getRoles()));
+        model.addAttribute("allRoles", User.getRolesAsStringNames(roleService.getAllRoles()));
         return "/admin/edit";
     }
 
@@ -63,13 +68,11 @@ public class AdminController {
     public String updateUser(@PathVariable("id") Integer id,
                              @RequestParam Map<String, String> map,
                              @ModelAttribute User user){
-        Set<String> roles = Arrays.stream(Role.values())
-                .map(Role::name)
-                .collect(Collectors.toSet());
+        Set<String> roles = User.getRolesAsStringNames(roleService.getAllRoles());
         user.getRoles().clear();
         for (String key : map.keySet()) {
              if(roles.contains(key))
-                 user.getRoles().add(Role.valueOf(key));
+                 user.getRoles().add(roleService.getRoleByName(key));
         }
         userService.updateUser(user);
         return "redirect:/admin";

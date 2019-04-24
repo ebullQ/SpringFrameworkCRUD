@@ -1,6 +1,7 @@
 package org.ebullq.service;
 
 import org.ebullq.dao.UserDAO;
+import org.ebullq.model.Role;
 import org.ebullq.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -21,6 +22,7 @@ public class UserServiceImpl implements UserService {
     public List<User> getAllUsers() {
         return userDAO.getAllUsers();
     }
+
 
     @Override
     public User getUserById(int id) {

@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -18,9 +19,13 @@ public class User implements UserDetails{
     private String password;
     private String name;
 
-    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-    @CollectionTable(name="user_role", joinColumns = @JoinColumn(name = "user_id"))
-    @Enumerated(EnumType.STRING)
+//    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+//    @CollectionTable(name="user_role", joinColumns = @JoinColumn(name = "user_id"))
+//    @Enumerated(EnumType.STRING)
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role",
+                joinColumns = @JoinColumn(name = "user_id"),
+                inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
     public User() {
@@ -72,7 +77,19 @@ public class User implements UserDetails{
     }
 
     public boolean isAdmin() {
-        return roles.contains(Role.ROLE_ADMIN);
+        for ( Role role : getRoles() ) {
+            if(role.getName().equals("ROLE_ADMIN"))
+                return true;
+        }
+        return false;
+    }
+
+    public static Set<String> getRolesAsStringNames(Collection<Role> roles){
+        Set<String> strings = new HashSet<>();
+        for (Role role : roles) {
+            strings.add(role.getName());
+        }
+        return strings;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package org.ebullq.dao;
 
+import org.ebullq.model.Role;
 import org.ebullq.model.User;
 
 import java.util.List;
