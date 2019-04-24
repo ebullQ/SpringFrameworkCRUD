@@ -14,11 +14,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     public UserService userService;
 
-    @PostConstruct
-    public void init(){
-
-    }
-
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
@@ -27,8 +22,5 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException(login);
         }
         return user;
-//        return new org.springframework.security.core.userdetails.User(login,
-//                user.getPassword(),
-//                user.getAuthorities());
     }
 }
