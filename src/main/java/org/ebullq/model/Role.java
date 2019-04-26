@@ -1,12 +1,12 @@
 package org.ebullq.model;
 
-import org.hibernate.annotations.GeneratorType;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
+@Table(name="roles")
 public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,10 +16,6 @@ public class Role implements GrantedAuthority {
     private Set<User> users;
 
     public Role() {
-    }
-
-    public Role(String name) {
-        this.name = name;
     }
 
     public String getAuthority() {

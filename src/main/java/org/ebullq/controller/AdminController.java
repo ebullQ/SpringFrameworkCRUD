@@ -8,6 +8,7 @@ import org.ebullq.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,6 @@ import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/admin")
-@PreAuthorize("hasAuthority('ADMIN')")
 public class AdminController {
 
     @Autowired
@@ -29,7 +29,10 @@ public class AdminController {
     private RoleService roleService;
 
     @GetMapping
-    public String admin(Model model){
+    public String admin(Model model,
+                        Authentication authentication){
+        User user = (User) authentication.getPrincipal();
+        model.addAttribute("user",user);
         model.addAttribute("users",userService.getAllUsers());
         return "/admin";
     }

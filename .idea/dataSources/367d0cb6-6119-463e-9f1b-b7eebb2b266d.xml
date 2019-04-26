@@ -1115,7 +1115,7 @@
       <Charset>utf8mb4</Charset>
       <DefaultForCharset>0</DefaultForCharset>
     </collation>
-    <table id="280" parent="2" name="Role"/>
+    <table id="280" parent="2" name="roles"/>
     <table id="281" parent="2" name="user_role"/>
     <table id="282" parent="2" name="users"/>
     <view id="283" parent="3" name="CHARACTER_SETS">
@@ -1364,7 +1364,7 @@ role_id</ColNames>
     <foreign-key id="357" parent="281" name="FK7ir6hi5jr98lclgjgbyxafneu">
       <ColNames>role_id</ColNames>
       <RefSchemaName>appschema</RefSchemaName>
-      <RefTableName>Role</RefTableName>
+      <RefTableName>roles</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
     <column id="358" parent="282" name="id">

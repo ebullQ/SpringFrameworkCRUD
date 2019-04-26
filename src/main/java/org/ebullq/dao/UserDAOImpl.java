@@ -1,6 +1,5 @@
 package org.ebullq.dao;
 
-import org.ebullq.model.Role;
 import org.ebullq.model.User;
 import org.springframework.stereotype.Repository;
 
