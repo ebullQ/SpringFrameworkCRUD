@@ -33,6 +33,7 @@
                     <span th:text="${role}"></span>
                     <label class="col-sm-2">
                         <input type="checkbox"
+                               th:checked="${roles.contains(role)}"
                                class="form-check-input form-control"
                                th:name="${role}">
                     </label>
